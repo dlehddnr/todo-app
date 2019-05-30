@@ -3,6 +3,14 @@ import { AppLoading } from "expo";
 import { StatusBar } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components";
+import { BG_COLOR } from "./constants/Color";
+import ToDoScreen from "./ToDoScreen";
+
+const Container = styled.View`
+  background-color: ${BG_COLOR};
+  flex: 1;
+  align-items: center;
+`;
 
 export default class App extends React.Component {
   state = {
@@ -24,14 +32,20 @@ export default class App extends React.Component {
     if (loaded) {
       return (
         <>
-          <StatusBar barStyle="light-content" />
+          <Container>
+            <StatusBar barStyle="light-content" />
+            <ToDoScreen />
+          </Container>
         </>
       );
+    } else {
+      return (
+        <AppLoading
+          startAsync={this.loadAssets}
+          onFinish={this.handleLoaded}
+          onError={this.handleError}
+        />
+      );
     }
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    );
   }
 }

@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components";
 import { BG_COLOR } from "./constants/Color";
 import ToDoScreen from "./ToDoScreen";
+import ToDoContainer from "./ToDoContainer";
 
 const Container = styled.View`
   background-color: ${BG_COLOR};
@@ -34,7 +35,7 @@ export default class App extends React.Component {
         <>
           <Container>
             <StatusBar barStyle="light-content" />
-            <ToDoScreen />
+            <ToDoContainer />
           </Container>
         </>
       );

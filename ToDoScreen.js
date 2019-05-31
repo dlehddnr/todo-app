@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { TINT_COLOR, CARD_COLOR } from "./constants/Color";
+import { TINT_COLOR, CARD_COLOR, GREY_COLOR } from "./constants/Color";
 import Layout from "./constants/Layout";
+import PropTypes from "prop-types";
 import { Platform } from "react-native";
+import ListContainer from "./ListContainer";
 
 const Container = styled.View`
   align-items: center;
@@ -21,17 +23,34 @@ const Card = styled.View`
   flex: 1;
   width: ${Layout.width - 25};
   border-radius: 15px;
+  box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.5);
 `;
 
-const Input = styled.TextInput``;
+const Input = styled.TextInput`
+  padding: 20px;
+  border-bottom-color: ${GREY_COLOR};
+  border-bottom-width: 1px;
+  font-size: 25px;
+`;
 
-const ToDoScreen = () => (
+const ToDoScreen = ({ newToDo, controlNewToDo }) => (
   <Container>
     <Title>Kawai To Do</Title>
     <Card>
-      <Input placeholder="New To Do" />
+      <Input
+        placeholder="New To Do"
+        value={newToDo}
+        onChangeText={controlNewToDo}
+        returnKeyType={"done"}
+      />
+      <ListContainer />
     </Card>
   </Container>
 );
+
+ToDoScreen.propTypes = {
+  newToDo: PropTypes.string,
+  controlNewToDo: PropTypes.func
+};
 
 export default ToDoScreen;

@@ -73,7 +73,8 @@ const ListPresenter = ({
   finishEditing,
   text,
   toDoValue,
-  controlInput
+  controlInput,
+  key
 }) => (
   <ToDoList contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}>
     <Container>
@@ -90,7 +91,9 @@ const ListPresenter = ({
             onBlut={finishEditing}
           />
         ) : (
-          <Text isCompleted={isCompleted}>{text}</Text>
+          <Text isCompleted={isCompleted} key={key}>
+            {text}
+          </Text>
         )}
       </Column>
       {isEditing ? (

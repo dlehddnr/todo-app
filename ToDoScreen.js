@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { TINT_COLOR, CARD_COLOR, GREY_COLOR } from "./constants/Color";
+import { TINT_COLOR, CARD_COLOR } from "./constants/Color";
 import Layout from "./constants/Layout";
 import PropTypes from "prop-types";
-import { Platform } from "react-native";
 import ListContainer from "./ListContainer";
 
 const Container = styled.View`
@@ -33,7 +32,7 @@ const Input = styled.TextInput`
   font-size: 25px;
 `;
 
-const ToDoScreen = ({ newToDo, controlNewToDo }) => (
+const ToDoScreen = ({ newToDo, controlNewToDo, addToDo, toDos }) => (
   <Container>
     <Title>Kawai To Do</Title>
     <Card>
@@ -42,15 +41,20 @@ const ToDoScreen = ({ newToDo, controlNewToDo }) => (
         value={newToDo}
         onChangeText={controlNewToDo}
         returnKeyType={"done"}
+        onSubmitEditing={addToDo}
       />
-      <ListContainer text={"hello"} />
+      {Object.values(toDos).map(toDo => (
+        <ListContainer key={toDo.id} {...toDo} />
+      ))}
     </Card>
   </Container>
 );
 
 ToDoScreen.propTypes = {
   newToDo: PropTypes.string,
-  controlNewToDo: PropTypes.func
+  controlNewToDo: PropTypes.func,
+  addToDo: PropTypes.func,
+  toDos: PropTypes.object
 };
 
 export default ToDoScreen;

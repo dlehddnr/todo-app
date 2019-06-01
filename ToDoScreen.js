@@ -28,7 +28,7 @@ const Card = styled.View`
 
 const Input = styled.TextInput`
   padding: 20px;
-  border-bottom-color: ${GREY_COLOR};
+  border-bottom-color: grey;
   border-bottom-width: 1px;
   font-size: 25px;
 `;
@@ -43,7 +43,7 @@ const ToDoScreen = ({ newToDo, controlNewToDo }) => (
         onChangeText={controlNewToDo}
         returnKeyType={"done"}
       />
-      <ListContainer />
+      <ListContainer text={"hello"} />
     </Card>
   </Container>
 );

@@ -1,9 +1,11 @@
 import React from "react";
 import ToDoScreen from "./ToDoScreen";
+import { AppLoading } from "expo";
 
 export default class extends React.Component {
   state = {
-    newToDo: ""
+    newToDo: "",
+    loadedToDos: false
   };
 
   controlNewToDo = text => {
@@ -12,10 +14,27 @@ export default class extends React.Component {
     });
   };
 
+  loadToDos = () => {
+    this.setState({ loadedToDos: true });
+  };
+
+  componentDidMount = () => {
+    this.loadToDos();
+  };
+
   render() {
-    const { newToDo } = this.state;
-    return (
-      <ToDoScreen newToDo={newToDo} controlNewToDo={this.controlNewToDo} />
-    );
+    const { newToDo, loadedToDos } = this.state;
+
+    if (loadedToDos) {
+      return (
+        <ToDoScreen
+          newToDo={newToDo}
+          controlNewToDo={this.controlNewToDo}
+          loadedToDos={loadedToDos}
+        />
+      );
+    } else {
+      return <AppLoading />;
+    }
   }
 }

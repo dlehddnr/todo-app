@@ -1,10 +1,8 @@
 import React from "react";
 import { AppLoading } from "expo";
 import { StatusBar } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components";
 import { BG_COLOR } from "./constants/Color";
-import ToDoScreen from "./ToDoScreen";
 import ToDoContainer from "./ToDoContainer";
 
 const Container = styled.View`

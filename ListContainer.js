@@ -4,11 +4,26 @@ import ListPresenter from "./ListPresenter";
 
 export default class extends React.Component {
   state = {
-    isEditing: false
+    isEditing: false,
+    isCompleted: false
+  };
+
+  toggleComplete = () => {
+    this.setState(prevState => {
+      return {
+        isCompleted: !prevState.isCompleted
+      };
+    });
   };
 
   render() {
-    const { isEditing } = this.state;
-    return <ListPresenter isEditing={isEditing} />;
+    const { isEditing, isCompleted } = this.state;
+    return (
+      <ListPresenter
+        isEditing={isEditing}
+        isCompleted={isCompleted}
+        toggleComplete={this.toggleComplete}
+      />
+    );
   }
 }

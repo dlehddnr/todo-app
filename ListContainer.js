@@ -36,7 +36,7 @@ export default class extends React.Component {
 
   render() {
     const { isEditing, isCompleted, toDoValue } = this.state;
-    const { text, id } = this.props;
+    const { text } = this.props;
     return (
       <ListPresenter
         isEditing={isEditing}
@@ -44,10 +44,9 @@ export default class extends React.Component {
         toggleComplete={this.toggleComplete}
         startEditing={this.startEditing}
         finishEditing={this.finishEditing}
-        text={text}
         controlInput={this.controlInput}
         toDoValue={toDoValue}
-        key={id}
+        text={text}
       />
     );
   }

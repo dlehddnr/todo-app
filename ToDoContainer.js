@@ -35,11 +35,11 @@ export default class extends React.Component {
         };
         const newState = {
           ...prevState,
+          newToDo: "",
           toDos: {
             ...prevState.toDos,
-            newToDoObject
-          },
-          newToDo: ""
+            ...newToDoObject
+          }
         };
         return { ...newState };
       });

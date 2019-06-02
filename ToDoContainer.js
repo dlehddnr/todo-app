@@ -1,4 +1,5 @@
 import React from "react";
+import { AsyncStorage } from "react-native";
 import ToDoScreen from "./ToDoScreen";
 import { AppLoading } from "expo";
 import uuidv1 from "uuid/v1";
@@ -16,8 +17,14 @@ export default class extends React.Component {
     });
   };
 
-  loadToDos = () => {
-    this.setState({ loadedToDos: true });
+  loadToDos = async () => {
+    try {
+      const toDos = await AsyncStorage.getItem("toDos");
+      const parsedToDos = JSON.parse(toDos);
+      this.setState({ loadedToDos: true, toDos: parsedToDos });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   addToDo = () => {
@@ -41,6 +48,7 @@ export default class extends React.Component {
             ...newToDoObject
           }
         };
+        this.saveToDos(newState.toDos);
         return { ...newState };
       });
     }
@@ -54,8 +62,64 @@ export default class extends React.Component {
         ...prevState,
         ...toDos
       };
+      this.saveToDos(newState.toDos);
       return { ...newState };
     });
+  };
+
+  uncompleteToDo = id => {
+    this.setState(prevState => {
+      const newState = {
+        ...prevState,
+        toDos: {
+          ...prevState.toDos,
+          [id]: {
+            ...prevState.toDos[id],
+            isCompleted: false
+          }
+        }
+      };
+      this.saveToDos(newState.toDos);
+      return { ...newState };
+    });
+  };
+
+  completeToDo = id => {
+    this.setState(prevState => {
+      const newState = {
+        ...prevState,
+        toDos: {
+          ...prevState.toDos,
+          [id]: {
+            ...prevState.toDos[id],
+            isCompleted: true
+          }
+        }
+      };
+      this.saveToDos(newState.toDos);
+      return { ...newState };
+    });
+  };
+
+  updateToDo = (id, text) => {
+    this.setState(prevState => {
+      const newState = {
+        ...prevState,
+        toDos: {
+          ...prevState.toDos,
+          [id]: {
+            ...prevState.toDos[id],
+            text
+          }
+        }
+      };
+      this.saveToDos(newState.toDos);
+      return { ...newState };
+    });
+  };
+
+  saveToDos = newToDos => {
+    const saveToDos = AsyncStorage.setItem("toDos", JSON.stringify(newToDos));
   };
 
   componentDidMount = () => {
@@ -71,6 +135,9 @@ export default class extends React.Component {
           controlNewToDo={this.controlNewToDo}
           addToDo={this.addToDo}
           deleteToDo={this.deleteToDo}
+          completeToDo={this.completeToDo}
+          uncompleteToDo={this.uncompleteToDo}
+          updateToDo={this.updateToDo}
           loadedToDos={loadedToDos}
           toDos={toDos}
         />

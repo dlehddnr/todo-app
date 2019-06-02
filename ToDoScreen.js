@@ -5,6 +5,11 @@ import Layout from "./constants/Layout";
 import PropTypes from "prop-types";
 import ListContainer from "./ListContainer";
 
+const ToDoList = styled.ScrollView`
+  width: ${Layout.width - 25};
+  padding-horizontal: 15px;
+`;
+
 const Container = styled.View`
   align-items: center;
 `;
@@ -37,7 +42,10 @@ const ToDoScreen = ({
   controlNewToDo,
   addToDo,
   toDos,
-  deleteToDo
+  deleteToDo,
+  completeToDo,
+  uncompleteToDo,
+  updateToDo
 }) => (
   <Container>
     <Title>Kawai To Do</Title>
@@ -49,9 +57,20 @@ const ToDoScreen = ({
         returnKeyType={"done"}
         onSubmitEditing={addToDo}
       />
-      {Object.values(toDos).map(toDo => (
-        <ListContainer key={toDo.id} {...toDo} deleteToDo={deleteToDo} />
-      ))}
+      <ToDoList contentContainerStyle={{ alignItems: "center" }}>
+        {Object.values(toDos)
+          .reverse()
+          .map(toDo => (
+            <ListContainer
+              key={toDo.id}
+              {...toDo}
+              deleteToDo={deleteToDo}
+              completeToDo={completeToDo}
+              uncompleteToDo={uncompleteToDo}
+              updateToDo={updateToDo}
+            />
+          ))}
+      </ToDoList>
     </Card>
   </Container>
 );
@@ -61,7 +80,10 @@ ToDoScreen.propTypes = {
   controlNewToDo: PropTypes.func,
   addToDo: PropTypes.func,
   toDos: PropTypes.object,
-  deleteToDo: PropTypes.func
+  deleteToDo: PropTypes.func,
+  completeToDo: PropTypes.func,
+  uncompleteToDo: PropTypes.func,
+  updateToDo: PropTypes.func
 };
 
 export default ToDoScreen;

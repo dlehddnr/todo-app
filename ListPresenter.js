@@ -5,11 +5,6 @@ import { TouchableOpacity } from "react-native";
 import Layout from "./constants/Layout";
 import { COMPLETE_COLOR, UNCOMPLETE_COLOR } from "./constants/Color";
 
-const ToDoList = styled.ScrollView`
-  width: ${Layout.width - 25};
-  padding-horizontal: 15px;
-`;
-
 const Container = styled.View`
   width: 100%;
   border-bottom-color: grey;
@@ -77,48 +72,46 @@ const ListPresenter = ({
   deleteToDo,
   id
 }) => (
-  <ToDoList contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}>
-    <Container>
-      <Column>
-        <TouchableOpacity onPress={toggleComplete}>
-          <Circle isCompleted={isCompleted} />
-        </TouchableOpacity>
-        {isEditing ? (
-          <Input
-            value={toDoValue}
-            multiline={true}
-            onChangeText={controlInput}
-            returnKeyType={"done"}
-            onBlut={finishEditing}
-          />
-        ) : (
-          <Text isCompleted={isCompleted}>{text}</Text>
-        )}
-      </Column>
+  <Container>
+    <Column>
+      <TouchableOpacity onPress={toggleComplete}>
+        <Circle isCompleted={isCompleted} />
+      </TouchableOpacity>
       {isEditing ? (
-        <Actions>
-          <TouchableOpacity onPressOut={finishEditing}>
-            <ActionContainer>
-              <ActionText>✅</ActionText>
-            </ActionContainer>
-          </TouchableOpacity>
-        </Actions>
+        <Input
+          value={toDoValue}
+          multiline={true}
+          onChangeText={controlInput}
+          returnKeyType={"done"}
+          onBlut={finishEditing}
+        />
       ) : (
-        <Actions>
-          <TouchableOpacity onPressOut={startEditing}>
-            <ActionContainer>
-              <ActionText>✏️</ActionText>
-            </ActionContainer>
-          </TouchableOpacity>
-          <TouchableOpacity onPressOut={() => deleteToDo(id)}>
-            <ActionContainer>
-              <ActionText>❌</ActionText>
-            </ActionContainer>
-          </TouchableOpacity>
-        </Actions>
+        <Text isCompleted={isCompleted}>{text}</Text>
       )}
-    </Container>
-  </ToDoList>
+    </Column>
+    {isEditing ? (
+      <Actions>
+        <TouchableOpacity onPressOut={finishEditing}>
+          <ActionContainer>
+            <ActionText>✅</ActionText>
+          </ActionContainer>
+        </TouchableOpacity>
+      </Actions>
+    ) : (
+      <Actions>
+        <TouchableOpacity onPressOut={startEditing}>
+          <ActionContainer>
+            <ActionText>✏️</ActionText>
+          </ActionContainer>
+        </TouchableOpacity>
+        <TouchableOpacity onPressOut={() => deleteToDo(id)}>
+          <ActionContainer>
+            <ActionText>❌</ActionText>
+          </ActionContainer>
+        </TouchableOpacity>
+      </Actions>
+    )}
+  </Container>
 );
 
 ListPresenter.propTypes = {

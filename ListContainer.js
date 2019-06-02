@@ -6,17 +6,23 @@ export default class extends React.Component {
     super(props);
     this.state = {
       isEditing: false,
-      isCompleted: false,
       toDoValue: props.text
     };
   }
 
   toggleComplete = () => {
-    this.setState(prevState => {
-      return {
-        isCompleted: !prevState.isCompleted
-      };
-    });
+    const {
+      isCompleted,
+      completeToDo,
+      uncompleteToDo,
+      updateToDo,
+      id
+    } = this.props;
+    if (isCompleted) {
+      uncompleteToDo(id);
+    } else {
+      completeToDo(id);
+    }
   };
 
   startEditing = () => {
@@ -26,6 +32,9 @@ export default class extends React.Component {
   };
 
   finishEditing = () => {
+    const { toDoValue } = this.state;
+    const { id, updateToDo } = this.props;
+    updateToDo(id, toDoValue);
     this.setState({
       isEditing: false
     });
@@ -36,8 +45,16 @@ export default class extends React.Component {
   };
 
   render() {
-    const { isEditing, toDoValue, isCompleted } = this.state;
-    const { text, deleteToDo, id } = this.props;
+    const { isEditing, toDoValue } = this.state;
+    const {
+      text,
+      deleteToDo,
+      id,
+      completeToDo,
+      uncompleteToDo,
+      isCompleted,
+      updateToDo
+    } = this.props;
     return (
       <ListPresenter
         isEditing={isEditing}
@@ -47,6 +64,9 @@ export default class extends React.Component {
         finishEditing={this.finishEditing}
         controlInput={this.controlInput}
         deleteToDo={deleteToDo}
+        completeToDo={completeToDo}
+        uncompleteToDo={uncompleteToDo}
+        updateToDo={updateToDo}
         toDoValue={toDoValue}
         text={text}
         id={id}

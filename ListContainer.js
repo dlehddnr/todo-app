@@ -2,11 +2,14 @@ import React from "react";
 import ListPresenter from "./ListPresenter";
 
 export default class extends React.Component {
-  state = {
-    isEditing: false,
-    isCompleted: false,
-    toDoValue: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isEditing: false,
+      isCompleted: false,
+      toDoValue: props.text
+    };
+  }
 
   toggleComplete = () => {
     this.setState(prevState => {
@@ -17,10 +20,8 @@ export default class extends React.Component {
   };
 
   startEditing = () => {
-    const { text } = this.props;
     this.setState({
-      isEditing: true,
-      toDoValue: text
+      isEditing: true
     });
   };
 
@@ -35,8 +36,8 @@ export default class extends React.Component {
   };
 
   render() {
-    const { isEditing, isCompleted, toDoValue } = this.state;
-    const { text } = this.props;
+    const { isEditing, toDoValue, isCompleted } = this.state;
+    const { text, deleteToDo, id } = this.props;
     return (
       <ListPresenter
         isEditing={isEditing}
@@ -45,8 +46,10 @@ export default class extends React.Component {
         startEditing={this.startEditing}
         finishEditing={this.finishEditing}
         controlInput={this.controlInput}
+        deleteToDo={deleteToDo}
         toDoValue={toDoValue}
         text={text}
+        id={id}
       />
     );
   }

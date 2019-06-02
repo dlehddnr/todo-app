@@ -74,9 +74,8 @@ const ListPresenter = ({
   text,
   toDoValue,
   controlInput,
-  key,
-  id,
-  createdAt
+  deleteToDo,
+  id
 }) => (
   <ToDoList contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}>
     <Container>
@@ -111,7 +110,7 @@ const ListPresenter = ({
               <ActionText>✏️</ActionText>
             </ActionContainer>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPressOut={() => deleteToDo(id)}>
             <ActionContainer>
               <ActionText>❌</ActionText>
             </ActionContainer>
@@ -128,7 +127,10 @@ ListPresenter.propTypes = {
   toggleComplete: PropTypes.func.isRequired,
   startEditing: PropTypes.func.isRequired,
   finishEditing: PropTypes.func.isRequired,
-  toDoValue: PropTypes.string
+  toDoValue: PropTypes.string,
+  text: PropTypes.string.isRequired,
+  deleteToDo: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired
 };
 
 export default ListPresenter;

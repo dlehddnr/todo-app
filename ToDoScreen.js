@@ -32,7 +32,13 @@ const Input = styled.TextInput`
   font-size: 25px;
 `;
 
-const ToDoScreen = ({ newToDo, controlNewToDo, addToDo, toDos }) => (
+const ToDoScreen = ({
+  newToDo,
+  controlNewToDo,
+  addToDo,
+  toDos,
+  deleteToDo
+}) => (
   <Container>
     <Title>Kawai To Do</Title>
     <Card>
@@ -44,7 +50,7 @@ const ToDoScreen = ({ newToDo, controlNewToDo, addToDo, toDos }) => (
         onSubmitEditing={addToDo}
       />
       {Object.values(toDos).map(toDo => (
-        <ListContainer key={toDo.id} {...toDo} />
+        <ListContainer key={toDo.id} {...toDo} deleteToDo={deleteToDo} />
       ))}
     </Card>
   </Container>
@@ -54,7 +60,8 @@ ToDoScreen.propTypes = {
   newToDo: PropTypes.string,
   controlNewToDo: PropTypes.func,
   addToDo: PropTypes.func,
-  toDos: PropTypes.object
+  toDos: PropTypes.object,
+  deleteToDo: PropTypes.func
 };
 
 export default ToDoScreen;

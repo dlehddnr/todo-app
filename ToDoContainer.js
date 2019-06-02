@@ -46,6 +46,18 @@ export default class extends React.Component {
     }
   };
 
+  deleteToDo = id => {
+    this.setState(prevState => {
+      const toDos = prevState.toDos;
+      delete toDos[id];
+      const newState = {
+        ...prevState,
+        ...toDos
+      };
+      return { ...newState };
+    });
+  };
+
   componentDidMount = () => {
     this.loadToDos();
   };
@@ -58,6 +70,7 @@ export default class extends React.Component {
           newToDo={newToDo}
           controlNewToDo={this.controlNewToDo}
           addToDo={this.addToDo}
+          deleteToDo={this.deleteToDo}
           loadedToDos={loadedToDos}
           toDos={toDos}
         />
